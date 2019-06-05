@@ -1,0 +1,101 @@
+
+Jtqs.api.Requests#devolverCidade(Ljava/lang/String;)Ltqs/api/models/Cidade;\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaV V( "paramAnnotations*¸
+2\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaY
+ Y(ê
+ç
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaY
+ Y(
+cidadetqs.api.models.Cidade"__id*
+""*
+4
+1*ù
+3\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.java\ \(¥
+±
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.java\ \((
+cidadeEscolhidatqs.api.models.Cidade"__id*!
+
+cidadetqs.api.models.Cidade*
+1*π
+4\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaZ Z(⁄◊
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaZ Z(
+%5java.lang.String"1tqs.api.models.Cidade#getNome()Ljava/lang/String;*!
+
+cidadetqs.api.models.Cidade2	getNome()Ì
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaZ Z($
+%6boolean",java.lang.String#equals(Ljava/lang/Object;)Z*
+
+%5java.lang.String*
+
+nomejava.lang.String2equals(Ljava/lang/Object;)*
+2
+3*é
+5\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaY Y(•
+¢
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaY Y(&
+%4java.util.ArrayList"__id*!*
+tqs.api.Requests"	
+cidades*
+2*€
+6\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaX X(*ïí
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaX" X((
+%0tqs.api.models.Cidade"tqs.api.models.Cidadeß
+§
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaX X(*
+%1"tqs.api.models.Cidade#<init>()V*
+
+%0tqs.api.models.Cidade∞
+≠
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaX X(+(
+cidadeEscolhidatqs.api.models.Cidade"__id*
+
+%0tqs.api.models.Cidade*
+5*´
+paramAnnotations\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaV  V(;À
+»
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaU U(-
+%2"
+__annotate*:8
+6org.springframework.web.bind.annotation.RequestMapping*
+
+nomejava.lang.String…
+∆
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaV! V(.
+%3"
+__annotate*86
+4org.springframework.web.bind.annotation.PathVariable*
+
+nomejava.lang.Stringô
+ñ
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.javaV6 V(:
+nomejava.lang.String"__annotation*
+
+%2*
+
+%3*
+6*Ó
+1\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.java` `("ä
+\
+RC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\Requests.java` `(*
+(
+cidadeEscolhidatqs.api.models.Cidade:
+nomejava.lang.StringB
+tqs.api.Requests

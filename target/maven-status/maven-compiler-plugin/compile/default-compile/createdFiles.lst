@@ -1,0 +1,4 @@
+tqs\api\models\Cidade.class
+tqs\api\WebConfig.class
+tqs\api\Requests.class
+tqs\api\SpringBootServer.class

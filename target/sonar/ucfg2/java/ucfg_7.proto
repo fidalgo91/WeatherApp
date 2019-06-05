@@ -1,0 +1,51 @@
+
+Htqs.api.WebConfig#cacheManager()Lorg/springframework/cache/CacheManager;]
+SC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\WebConfig.java ($"1*Ç
+1]
+SC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\WebConfig.java$ (<‘—
+]
+SC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\WebConfig.java( (::
+%04org.springframework.cache.support.SimpleCacheManager"4org.springframework.cache.support.SimpleCacheManagerÊ
+„
+]
+SC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\WebConfig.java$ (<
+%1">org.springframework.cache.support.SimpleCacheManager#<init>()V*<
+:
+%04org.springframework.cache.support.SimpleCacheManagerÏ
+È
+]
+SC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\WebConfig.java (=D
+cacheManager4org.springframework.cache.support.SimpleCacheManager"__id*<
+:
+%04org.springframework.cache.support.SimpleCacheManager⁄◊
+]
+SC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\WebConfig.java1 (C=
+%27org.springframework.cache.concurrent.ConcurrentMapCache"7org.springframework.cache.concurrent.ConcurrentMapCacheä
+á
+]
+SC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\WebConfig.java- (M
+%3"Sorg.springframework.cache.concurrent.ConcurrentMapCache#<init>(Ljava/lang/String;)V*?
+=
+%27org.springframework.cache.concurrent.ConcurrentMapCache*
+
+resultç
+ä
+]
+SC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\WebConfig.java (N
+%4java.util.List"<java.util.Arrays#asList([Ljava/lang/Object;)Ljava/util/List;*"
+java.util.Arrays*?
+=
+%27org.springframework.cache.concurrent.ConcurrentMapCache «
+]
+SC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\WebConfig.java (O
+
+%5void"Worg.springframework.cache.support.SimpleCacheManager#setCaches(Ljava/util/Collection;)V*F
+D
+cacheManager4org.springframework.cache.support.SimpleCacheManager*
+
+%4java.util.List2!setCaches(Ljava/util/Collection;)"ß
+]
+SC:\Users\Asus\Desktop\tqs\trabalho1tqs\tqs.api\src\main\java\tqs\api\WebConfig.java (F
+D
+cacheManager4org.springframework.cache.support.SimpleCacheManagerB
+tqs.api.WebConfig

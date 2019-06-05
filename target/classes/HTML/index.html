@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+
+    <title>Cloud blues</title>
+
+    <!-- Loading third party fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+    <link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Loading main css file -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#hour").text(new Date().toLocaleDateString());
+            preencherDropdownlist();
+            preencherInicial();
+
+
+            $("#list").on("change", mudarConteudo);
+            $("#dias").on("change", mudarEstrutura);
+            $("#adicionarCidade").on("click", adicionarCidade);
+
+            function mudarEstrutura()
+            {
+                const valorSelecionado = $("#dias option:selected").val();
+                console.log(valorSelecionado)
+                if (valorSelecionado == "3")
+                {
+                    $(".cincoDias").hide()
+                }
+                else if(valorSelecionado == "5")
+                {
+                    $(".cincoDias").show();
+                }
+            }
+
+            function adicionarCidade() {
+                const latitude = $("#latitude").val();
+                const longitude = $("#longitude").val();
+                const cidadeNome = $("#cidadeInput").val();
+
+                if (latitude.length == 0 || longitude.length == 0 || cidadeNome.length == 0) {
+                    alert("Por favor preencha os campos");
+                    return false;
+                }
+
+                if (!isItNumber(parseFloat(latitude)) || !isItNumber(parseFloat(longitude))) {
+                    alert("Por favor insira valores validos")
+                    return false;
+                }
+
+                $.ajax({
+                    url: "http://localhost:8080/adicionarCidade/" + cidadeNome + "/" + parseFloat(latitude) + "/" + parseFloat(longitude),
+                    method: "POST", //First change type to method here
+                    data: { nome: cidadeNome, latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
+                    success: function (result) {
+                        alert("Cidade adicionada com sucesso, pode aceder pela dropdownlist");
+                        window.location.reload();
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
+            }
+
+            function formarHTML(result)
+            {
+                // hoje
+                $("#tempToday").text(result.currently.temperature + " o C");
+                $("#humidadeToday").text((result.currently.humidity * 100).toFixed(2) + "%");
+                $("#velocidadeVentoToday").text(result.currently.windSpeed + "km/h");
+                $("#sumario").text(result.currently.summary);
+                formarIcone("#iconForecastToday", result.currently.icon);
+                // amanha
+                $("#maxTomorrow").text(result.daily.data[1].temperatureHigh + " o C");
+                $("#minTomorrow").text(result.daily.data[1].temperatureLow + " o C");
+                $("#sumarioTomorrow").text(result.daily.data[1].summary);
+                formarIcone("#imageTomorrow", result.daily.data[1].icon);
+                // 3 dias
+                $("#max3d").text(result.daily.data[3].temperatureHigh + " o C");
+                $("#min3d").text(result.daily.data[3].temperatureLow + " o C");
+                $("#sumario3d").text(result.daily.data[3].summary);
+                formarIcone("#image3d", result.daily.data[3].icon);
+                // 4 dias
+                $("#max4d").text(result.daily.data[5].temperatureHigh + " o C");
+                $("#min4d").text(result.daily.data[5].temperatureLow + " o C");
+                $("#sumario4d").text(result.daily.data[5].summary);
+                formarIcone("#image4d", result.daily.data[5].icon);
+                // 5 dias
+                $("#max5d").text(result.daily.data[7].temperatureHigh + " o C");
+                $("#min5d").text(result.daily.data[7].temperatureLow + " o C");
+                $("#sumario5d").text(result.daily.data[7].summary);
+                formarIcone("#image5d", result.daily.data[7].icon);
+            }
+
+            function preencherInicial() {
+                $("#locationToday").text("Aveiro");
+                $.ajax({
+                    url: "http://localhost:8080/pesquisar/Aveiro",
+                    dataType: "json",
+                    type: "GET",
+                    success: function (result) {
+                        result = JSON.parse(result);
+                        formarHTML(result);
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                });
+            }
+
+            function mudarConteudo() {
+                const valorSelecionado = $("#list option:selected").text();
+                $("#locationToday").text(valorSelecionado);
+                $.ajax({
+                    url: "http://localhost:8080/pesquisar/" + valorSelecionado,
+                    dataType: "json",
+                    type: "GET",
+                    success: function (result) {
+                        result = JSON.parse(result);
+                        formarHTML(result);
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                });
+            }
+
+            function preencherDropdownlist() {
+                $.ajax({
+                    url: "http://localhost:8080/devolverCidades/",
+                    dataType: "json",
+                    type: "GET",
+                    success: function (result) {
+                        var $dropdown = $("#list");
+                        $.each(result, function () {
+                            $dropdown.append($("<option />").val(this.nome).text(this.nome));
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                });
+            }
+            
+            function formarIcone(image, tipo)
+            {
+                switch (tipo) {
+                    case "clear-day" || "clear-night":
+                        $(image).attr("src", "images/icons/icon-1.svg");
+                        break;
+                    case "partly-cloudy-day" || "partly-cloudy-night" || "cloudy" || "fog" || "wind":
+                        $(image).attr("src", "images/icons/icon-5.svg");
+                        break;
+                    case "rain" || "sleet" || "wind" || "fog":
+                        $(image).attr("src", "images/icons/icon-3.svg");
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            function covertTime(number)
+            {
+                var myObj = $.parseJSON('{"time": number}'),
+                myDate = new Date(1000*myObj.time);
+                return myDate;
+            }
+
+            function isItNumber(str) {
+                return /^\-?[0-9]+(e[0-9]+)?(\.[0-9]+)?$/.test(str);
+            }
+        });
+    </script>
+</head>
+
+
+<body>
+
+    <div class="site-content">
+        <div class="site-header">
+            <div class="container">
+                <a href="index.html" class="branding">
+                    <img src="images/logo.png" alt="" class="logo">
+                    <div class="logo-type">
+                        <h1 class="site-title">Cloud Blues</h1>
+                        <small class="site-description">The best Clouds for your blues</small>
+                    </div>
+                </a>
+
+                <!-- Default snippet for navigation -->
+                <div class="main-navigation">
+                    <select id="dias">
+                        <option value="5">Cinco Dias</option>
+                        <option value="3">Três Dias</option>
+                    </select>
+                    <select id="list">
+                    </select>
+                    <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+                    <ul class="menu">
+                        <li class="menu-item current-menu-item"><a href="index.html"
+                                style="text-decoration-line: none">Home</a></li>
+                        <li class="menu-item current-menu-item">
+                            <button type="button" class="botaoModal" id="modal" data-toggle="modal" data-target="#myModal">
+                                <a>Adicionar Cidade</a>
+                            </button>
+                        </li>
+                    </ul> <!-- .menu -->
+                </div> <!-- .main-navigation -->
+
+                <div class="mobile-navigation"></div>
+
+            </div>
+        </div> <!-- .site-header -->
+
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal" style="color: black !important;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Adicionar Cidade</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="cidadeInput">Cidade:</label>
+                            <input type="text" class="form-control" id="cidadeInput" name="cidadeInput">
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Latitude e Longitude</span>
+                            </div>
+                            <input type="text" id="latitude" name="latitude" aria-label="latitude" class="form-control">
+                            <input type="text" id="longitude" name="longitude" aria-label="longitude"
+                                class="form-control">
+                        </div>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            id="adicionarCidade">Adicionar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="hero" data-bg-image="images/banner.png">
+            <div class="container">
+
+
+            </div>
+        </div>
+        <div class="forecast-table">
+            <div class="container">
+                <div class="forecast-container">
+                    <div class="today forecast">
+                        <div class="forecast-header">
+                            <div class="day">Hoje</div>
+                            <div id="hour"></div>
+                        </div> <!-- .forecast-header -->
+                        <div class="forecast-content">
+                            <div>
+                                <h1 id="locationToday">New York</h1>
+                            </div>
+                            <div id="degreeToday">
+                                <div>
+                                    <h3 id="tempToday" style="display: inline;">Temperatura: 23 <sup>o</sup>C</h3>
+                                  </div>
+                                <br>
+                                <div class="forecast-icon">
+                                    <img id="iconForecastToday" src="images/icons/icon-1.svg" alt="" width=90>
+                                </div>
+                            </div>
+                            <br>
+                            <span><img src="images/icon-umberella.png" alt=""><span id="humidadeToday">20%</span></span>
+                            <span><img src="images/icon-wind.png" alt=""><span
+                                    id="velocidadeVentoToday">18km/h</span></span>
+                            <span id="sumario"></span>
+                        </div>
+                    </div>
+                    <div class="forecast">
+                        <div class="forecast-header">
+                            <div class="day">Amanha</div>
+                        </div> <!-- .forecast-header -->
+                        <div class="forecast-content">
+                            <div class="forecast-icon">
+                                <img id="imageTomorrow" src="images/icons/icon-5.svg" alt="" width=48>
+                            </div>
+                            <div>
+                                <h3 id="maxTomorrow">Max: 23 <sup>o</sup>C</h3>
+                                <h3 id="minTomorrow">Min: 15 <sup>o</sup>C</h3>
+                            </div>
+                            <div>
+                                <span id="sumarioTomorrow"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="forecast">
+                        <div class="forecast-header">
+                            <div class="day">3 Dias</div>
+                        </div> <!-- .forecast-header -->
+                        <div class="forecast-content">
+                            <div class="forecast-icon">
+                                <img id="image3d" src="images/icons/icon-3.svg" alt="" width=48>
+                            </div>
+                            <div>
+                                <h3 id="max3d">Max: 23 <sup>o</sup>C</h3>
+                                <h3 id="min3d">Min: 15 <sup>o</sup>C</h3>
+                            </div>
+                            <div>
+                                <span id="sumario3d"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="forecast cincoDias">
+                        <div class="forecast-header">
+                            <div class="day">4 dias</div>
+                        </div> <!-- .forecast-header -->
+                        <div class="forecast-content">
+                            <div class="forecast-icon">
+                                <img id="image4d" src="images/icons/icon-7.svg" alt="" width=48>
+                            </div>
+                            <div>
+                                <h3 id="max4d">Max: 23 <sup>o</sup>C</h3>
+                                <h3 id="min4d">Min: 15 <sup>o</sup>C</h3>
+                            </div>
+                            <div>
+                                <span id="sumario4d"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="forecast cincoDias">
+                        <div class="forecast-header">
+                            <div class="day">5 dias</div>
+                        </div> <!-- .forecast-header -->
+                        <div class="forecast-content">
+                            <div class="forecast-icon">
+                                <img id="image5d" src="images/icons/icon-12.svg" alt="" width=48>
+                            </div>
+                            <div>
+                                <h3 id="max5d">Max: 23 <sup>o</sup>C</h3>
+                                <h3 id="min5d">Min: 15 <sup>o</sup>C</h3>
+                            </div>
+                            <div>
+                                <span id="sumario5d"></span>
+                            </div>
+                        </div>
+                   
+                </div>
+                </div>
+            </div>
+        </div>
+
+        </main> <!-- .main-content -->
+
+        <footer class="site-footer">
+            <div class="container">
+
+
+                <p class="colophon">Copyright 2014 Company name. Designed by Themezy. All rights reserved</p>
+            </div>
+        </footer> <!-- .site-footer -->
+    </div>
+
+
+
+
+    <script src="js/plugins.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
